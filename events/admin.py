@@ -2,6 +2,26 @@ from django.contrib import admin
 from .models import Organizer,Event,Registration
 
 # Register your models here.
-admin.site.register(Organizer)
-admin.site.register(Event)
-admin.site.register(Registration)
+class RegistrationInline(admin.TabularInline):
+    model = Registration
+    extra = 1
+
+
+@admin.register(Organizer)
+class OrganizerAdmin(admin.ModelAdmin):
+    list_display = ("id","name","email")
+    search_fields = ("name","email")
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = ("id","title","venue","start_time","end_time","capacity")
+    search_fields = ("title","venue",)
+    list_filter = ("start_time", "end_time",)
+    readonly_fields = ("created_at","updated_at",)
+    inlines = [RegistrationInline]
+
+@admin.register(Registration)
+class RegistrationAdmin(admin.ModelAdmin):
+    list_display = ('id',"user","event","registered_at",)
+    search_fields = ("user_username","event_title",)
+    readonly_fields = ("registered_at",)
