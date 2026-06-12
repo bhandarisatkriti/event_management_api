@@ -11,6 +11,7 @@ class RegistrationInline(admin.TabularInline):
 class OrganizerAdmin(admin.ModelAdmin):
     list_display = ("id","name","email")
     search_fields = ("name","email")
+    list_filter = ("name",)
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
@@ -23,5 +24,6 @@ class EventAdmin(admin.ModelAdmin):
 @admin.register(Registration)
 class RegistrationAdmin(admin.ModelAdmin):
     list_display = ('id',"user","event","registered_at",)
-    search_fields = ("user_username","event_title",)
+    search_fields = ("user__username","event__title",)
     readonly_fields = ("registered_at",)
+    list_filter = ("registered_at","event")

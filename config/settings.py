@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'events',
+    'drf_yasg',
 ]
 
 REST_FRAMEWORK = {
@@ -131,3 +132,6 @@ JAZZMIN_SETTINGS = {
     "site_header": "Event Management Admin",
     "site_brand": "Event Management",
 }
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR/"media"
