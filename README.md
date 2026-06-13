@@ -16,7 +16,7 @@ Day 1 : Setup and model creation
 Clone Repository
 
 ```bash
-git clone https://github.com/bhandarisatkriti/event-management-api.git
+git clone https://github.com/bhandarisatkriti/event_management_api.git
 
 ```
 
