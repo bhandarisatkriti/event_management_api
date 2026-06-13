@@ -187,10 +187,6 @@ send_mail(
 )
 ```
 
-The email was successfully tested and received in the Gmail inbox.
-
----
-![Email Screenshot](images/email.png)
 
 Swagger API Documentation (`drf-yasg`)
 
@@ -253,6 +249,12 @@ urlpatterns = [
 ```
 
 ---
+
+The email was successfully tested and received in the Gmail inbox after event registerd.
+
+---
+![Email Screenshot](images/email.png)
+
 
 ▶ How to Run Project
 
