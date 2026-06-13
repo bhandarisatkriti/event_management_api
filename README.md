@@ -250,11 +250,6 @@ urlpatterns = [
 
 ---
 
-The email was successfully tested and received in the Gmail inbox after event registerd.
-
----
-![Email Screenshot](images/email.png)
-
 
 ▶ How to Run Project
 
@@ -264,6 +259,28 @@ uv run python manage.py migrate
 uv run python manage.py createsuperuser
 uv run python manage.py runserver
 ```
+Sample API Requests:
+
+Authentication (Swagger)
+![Authentication](images/image-1.png)
+
+GET /events/
+![GET /events/](images/image-3.png)
+
+POST /events/
+![POST /events/](images/image-4.png)
+
+GET /events/{id}/
+![GET /events/{id}/](images/image-2.png)
+
+PUT/PATCH/ events/{id}/
+![PATCH](images/image-5.png)
+
+DELETE/ events/{id}/
+![DELETE](images/image-6.png)
+
+POST /events/{id}/register/
+![Email Screenshot](images/email.png)
 
 Final Outcome
 
