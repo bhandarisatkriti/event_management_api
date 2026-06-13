@@ -2,7 +2,23 @@ Event Management API
 
 A Django REST Framework backend project for managing events, organizers, and user registrations.
 
+ Features
+
+- User Authentication (JWT)
+- Event CRUD (Create, Read, Update, Delete)
+- Event Registration system
+- Email notifications (SMTP - Gmail)
+- API Documentation using Swagger & ReDoc
+- Secure environment variables using `.env`
+
 Day 1 : Setup and model creation
+
+Clone Repository
+
+```bash
+git clone https://github.com/bhandarisatkriti/event-management-api.git
+
+```
 
 Setup Instructions
 ~~~bash
@@ -26,8 +42,9 @@ uv add django-environ
 uv add django-filter
 ~~~
 
+
 Created three models:
-Organizer, Events, Registrartion
+Organizer, Events, Registration
 
 Day 2: CRUD + Admin (Jazzmin)
 Implemented full CRUD functionality using Django REST Framework with ModelViewSet and DefaultRouter.
@@ -44,7 +61,7 @@ Admin Panel (Jazzmin)
 - Implemented Inline Registration inside Event admin
 - Added readonly fields for timestamps (created_at, updated_at)
 
-built REST APIs with full CRUD operations and a modern admin panel using Jazzmin.
+Built REST APIs with full CRUD operations and a modern admin panel using Jazzmin.
 
 Day 3 – JWT Auth + File Upload (DRF)
 JWT Authentication (SimpleJWT)
@@ -104,4 +121,159 @@ image = models.ImageField(upload_to="banners/")
 Files stored in: media/banners/
 DB stores: banners/filename.jpg
 Access URL: http://127.0.0.1:8000/media/banners/filename.jpg
-![alt text](image.png)
+
+Day 4: Email Configuration & Swagger Documentation
+
+Email Configuration (SMTP)
+
+Installed `django-environ` to securely manage sensitive credentials using a `.env` file.
+
+`.env` File
+
+Created a `.env` file in the project root:
+
+```env
+EMAIL_HOST_USER=your_email@gmail.com
+EMAIL_HOST_PASSWORD=your_16_digit_app_password
+```
+
+Added `.env` to `.gitignore` to prevent credentials from being pushed to GitHub.
+
+---
+
+`settings.py` Changes
+
+Imported `django-environ` and loaded environment variables:
+
+```python
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
+```
+
+Configured the Gmail SMTP email backend:
+
+```python
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+```
+
+---
+
+Email Trigger
+
+Imported `send_mail` and added email functionality in the event registration endpoint:
+
+```python
+from django.core.mail import send_mail
+from django.conf import settings
+```
+
+Example:
+
+```python
+send_mail(
+    subject="Event Registration Confirmation",
+    message="You have successfully registered for the event.",
+    from_email=settings.EMAIL_HOST_USER,
+    recipient_list=[user.email],
+)
+```
+
+The email was successfully tested and received in the Gmail inbox.
+
+---
+![Email Screenshot](images/email.png)
+
+Swagger API Documentation (`drf-yasg`)
+
+Installed `drf-yasg` for interactive API documentation.
+
+`settings.py` Changes
+
+Added `drf_yasg` to `INSTALLED_APPS`:
+
+```python
+INSTALLED_APPS = [
+    ...
+    "drf_yasg",
+]
+```
+
+---
+
+`config/urls.py` Imports
+
+```python
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+```
+
+---
+
+Created Swagger Schema View
+
+```python
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Event Management API",
+        default_version="v1",
+        description="API documentation for Event Management System",
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+```
+
+---
+
+Added Swagger & ReDoc URLs
+
+```python
+urlpatterns = [
+    path(
+        "swagger/",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="swagger",
+    ),
+    path(
+        "redoc/",
+        schema_view.with_ui("redoc", cache_timeout=0),
+        name="redoc",
+    ),
+]
+```
+
+---
+
+▶ How to Run Project
+
+```bash
+uv run python manage.py makemigrations
+uv run python manage.py migrate
+uv run python manage.py createsuperuser
+uv run python manage.py runserver
+```
+
+Final Outcome
+
+- Fully functional REST API for event management
+- JWT authentication secured endpoints
+- Email confirmation system working via Gmail SMTP
+- Swagger & ReDoc API documentation available
+- Admin panel enhanced with Jazzmin theme
+- Media upload system implemented
+
+Sakriti Bhandari  
+Django REST Framework Internship Project
+
+
+
