@@ -63,6 +63,8 @@ Admin Panel (Jazzmin)
 
 Built REST APIs with full CRUD operations and a modern admin panel using Jazzmin.
 
+![Jazzmin](images/image.png)
+
 Day 3 – JWT Auth + File Upload (DRF)
 JWT Authentication (SimpleJWT)
 ~~~bash
